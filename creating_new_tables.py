@@ -11,8 +11,7 @@ if not df.empty:
   # 'vacancy.company.code_industry_branch' и 'vacancy.category.industry' не рассматриваем, так как в записях практически нет информации;
   # в случае 'vacancy.company.code_industry_branch' - нет ни одной записи с не NULL-значением
   companies = df[
-    ['vacancy.company.inn', 'vacancy.company.ogrn',
-    'vacancy.company.kpp', 'vacancy.company.companycode',
+    [ 'vacancy.company.companycode', 'vacancy.company.inn', 'vacancy.company.ogrn', 'vacancy.company.kpp',
     'vacancy.company.name',
     'vacancy.addresses.address',
     'vacancy.company.hr-agency',
@@ -22,10 +21,10 @@ if not df.empty:
   companies = companies.drop_duplicates(subset="vacancy.company.inn", keep='first')
   companies = companies.reset_index(drop=True)
   companies = companies.rename(columns={
+    'vacancy.company.companycode' : 'companycode',
     'vacancy.company.inn' : 'inn',
     'vacancy.company.ogrn' : 'ogrn',
     'vacancy.company.kpp' : 'kpp',
-    'vacancy.company.companycode' : 'companycode',
     'vacancy.company.name' : 'name',
     'vacancy.addresses.address' : 'address',
     'vacancy.company.hr-agency' : 'hr-agency',
@@ -40,7 +39,7 @@ if not df.empty:
   # companies.to_excel('tables/excel/companies.xlsx', index=None, header=True, engine='xlsxwriter')
   
   vacancies = df[
-    ['vacancy.id', 'vacancy.company.inn',
+    ['vacancy.id', 'vacancy.company.companycode',
     'vacancy.source',
     'vacancy.region.region_code', 'vacancy.region.name', 'vacancy.addresses.address',
     'vacancy.requirement.experience',
@@ -55,7 +54,7 @@ if not df.empty:
 
   vacancies = vacancies.rename(columns={
     'vacancy.id' : 'id',
-    'vacancy.company.inn' : 'inn',
+    'vacancy.company.companycode' : 'companycode',
     'vacancy.source' : 'source',
     'vacancy.region.region_code' : 'region_code',
     'vacancy.region.name' : 'region_name',

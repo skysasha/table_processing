@@ -22,6 +22,10 @@ def remove_tags(text):
   no_tags = re.sub(r'(<!--.*?-->|<[^>]*>)', '', text)
   return cgi.escape(no_tags)
 
+def missing(dff):
+    print (round((dff.isnull().sum() * 100/ len(dff)),2).sort_values(ascending=False))
+
+
 
 start_time = time.time()
 
@@ -37,10 +41,17 @@ while True:
   offset += 1
   
 if not df_raw.empty:
-  # print(*list(df_raw.columns), sep='\n')
-  df_raw = df_raw.astype({'vacancy.addresses.address' : 'str',
-                          'vacancy.duty' : 'str',
-                          'vacancy.requirement.qualification' : 'str',})
+  df_raw = df_raw.astype({
+    'vacancy.region.region_code' : 'str',
+    'vacancy.company.inn' : 'str',
+    'vacancy.company.ogrn' : 'str',
+    'vacancy.company.kpp' : 'str',
+    'vacancy.addresses.address' : 'str',
+    'vacancy.duty' : 'str',
+    'vacancy.requirement.qualification' : 'str',
+    })
+  df_raw['vacancy.company.inn'] = pd.to_numeric(df_raw['vacancy.company.inn'], errors='coerce')
+  
   for index, row in df_raw.iterrows():
     df_raw.at[index, 'vacancy.addresses.address'] = re.sub("'location': |{|\[|lng': |'lat': |}|\]|\'", '', df_raw.at[index, 'vacancy.addresses.address'])
     df_raw.at[index, 'vacancy.duty'] = remove_tags(df_raw.at[index, 'vacancy.duty'])
