@@ -8,7 +8,7 @@ import re
 
 
 def is_word_in_string(word, string):
-  string = re.sub('[^\w\s]', '', string)
+  string = re.sub(r'[^\w\s]', '', string)
   for w in string.split():
     if w == word:
       return True
