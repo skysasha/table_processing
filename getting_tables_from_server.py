@@ -3,27 +3,28 @@
 import pandas as pd
 import sqlalchemy
 
+import access_to_db
+
 
 def get_table_from_query(query):
-    engine = sqlalchemy.create_engine(r"postgresql://blinov:GE1vmEN@217.71.129.139:4194/ias", echo=False)
-    df = pd.read_sql(query, engine)
+    df = pd.read_sql(query, access_to_db.engine)
     return df
 
 
 mrigo_query = """
         SELECT DISTINCT data.vf_btr_lines.id_mrigo, data.vf_btr_lines.mrigo
         FROM data.vf_btr_lines
-        ORDER BY 2
+        ORDER BY 1 DESC
         """
-vf_btr_lines_id_mrigo = get_table_from_query(mrigo_query)
-vf_btr_lines_id_mrigo.to_csv('tables/csv/vf_btr_lines_id_mrigo.csv', index=None, header=True)
-# vf_btr_lines_id_mrigo.to_excel('tables/excel/vf_btr_lines_id_mrigo.xlsx', index=None, header=True, engine='xlsxwriter')
-
+id_mrigo_mrigo = get_table_from_query(mrigo_query)
+id_mrigo_mrigo.to_csv('tables/csv/id_mrigo_mrigo.csv', index=None, header=True)
+# id_mrigo_mrigo.to_excel('tables/excel/id_mrigo_mrigo.xlsx', index=None, header=True, engine='xlsxwriter')
 
 okptdr_query = """
         SELECT data.okpdtr.id, data.okpdtr.name
         FROM data.okpdtr
+        ORDER BY 1
         """
-okpdtr_id_name = get_table_from_query(okptdr_query)
-okpdtr_id_name.to_csv('tables/csv/okpdtr_id_name.csv', index=None, header=True)
-# okpdtr_id_name.to_excel('tables/excel/okpdtr_id_name.xlsx', index=None, header=True, engine='xlsxwriter')
+id_okpdtr_okpdtr = get_table_from_query(okptdr_query)
+id_okpdtr_okpdtr.to_csv('tables/csv/id_okpdtr_okpdtr.csv', index=None, header=True)
+# id_okpdtr_okpdtr.to_excel('tables/excel/id_okpdtr_okpdtr.xlsx', index=None, header=True, engine='xlsxwriter')

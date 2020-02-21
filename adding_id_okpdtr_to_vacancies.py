@@ -12,7 +12,7 @@ import okpdtr_splits
 
 
 vacancies = pd.read_csv('tables/csv/vacancies_mrigo.csv')
-okpdtr_id_name = pd.read_csv('tables/csv/okpdtr_id_name.csv')
+okpdtr_id_name = pd.read_csv('tables/csv/id_okpdtr_okpdtr.csv')
 
 id_okpdtr_lst = okpdtr_id_name['id'].tolist()
 okpdtr_lst = okpdtr_id_name['name'].tolist()

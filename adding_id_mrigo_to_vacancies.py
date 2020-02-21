@@ -27,9 +27,10 @@ for adress in adresses_raw:
 # with open('files/adresses.txt', 'w+') as f:
 #   f.write('\n'.join(adresses))
 
-vf_btr_lines_id_mrigo = pd.read_csv('tables/csv/vf_btr_lines_id_mrigo.csv')
+vf_btr_lines_id_mrigo = pd.read_csv('tables/csv/id_mrigo_mrigo.csv')
 id_mrigo = vf_btr_lines_id_mrigo['id_mrigo'].tolist()
 mrigo = vf_btr_lines_id_mrigo['mrigo'].tolist()
+mrigo = [re.sub(r'р[.]п[.]\s', '', s) for s in mrigo]
 
 indexes = []
 for i in range(len(adresses)):

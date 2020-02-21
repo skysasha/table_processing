@@ -3,12 +3,12 @@
 import pandas as pd
 import sqlalchemy as sa
 
-engine = sa.create_engine(r"postgresql://blinov:GE1vmEN@217.71.129.139:4194/ias", echo=False)
+import access_to_db
 
 companies = pd.read_csv('tables/csv/companies.csv')
 companies.to_sql(
     'companies_tv',
-    con=engine,
+    con=access_to_db.engine,
     schema=None,
     if_exists='replace',        # понимаю, что очень плохо, но пока не могу судить, что "дешевле" -- заменять целиком или обновлять
     index=False,
@@ -32,7 +32,7 @@ companies.to_sql(
 vacancies_r = pd.read_csv('tables/csv/vacancies.csv')
 vacancies_r.to_sql(
     'r_vacancies_tv',
-    con=engine,
+    con=access_to_db.engine,
     schema=None,
     if_exists='replace',
     index=False,
@@ -67,7 +67,7 @@ vacancies_r.to_sql(
 vacancies_ext = pd.read_csv('tables/csv/vacancies_mrigo_okpdtr.csv')
 vacancies_ext.to_sql(
     'vacancies_tv',
-    con=engine,
+    con=access_to_db.engine,
     schema=None,
     if_exists='replace',
     index=False,
