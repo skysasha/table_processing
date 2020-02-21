@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 dictionary = [r'разряд', r'разряда', r'категория',
               r'категории', r'класс', r'класса',
