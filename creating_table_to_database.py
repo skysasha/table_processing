@@ -9,71 +9,71 @@ import sqlalchemy as sa
 import access_to_db
 
 
-# vf_btr_lines_id_mrigo = pd.read_csv(os.path.join('tables', 'csv', 'id_mrigo_mrigo.csv'))
-# vf_btr_lines_id_mrigo.to_sql(
-#     'mrigo',
-#     con=access_to_db.engine,
-#     schema='blinov',
-#     if_exists='replace',        # понимаю, что очень плохо, но пока не могу судить, что "дешевле" -- заменять целиком или обновлять
-#     index=False,
-#     chunksize=None,
-#     method=None,
-#     dtype={
-#         'id_mrigo' : sa.String,
-#         'mrigo' : sa.String,
-#     })
-# access_to_db.engine.execute('ALTER TABLE blinov.mrigo ADD PRIMARY KEY(id_mrigo)')
+vf_btr_lines_id_mrigo = pd.read_csv(os.path.join('tables', 'csv', 'id_mrigo_mrigo.csv'))
+vf_btr_lines_id_mrigo.to_sql(
+    'mrigo',
+    con=access_to_db.engine,
+    schema='blinov',
+    if_exists='replace',
+    index=False,
+    chunksize=None,
+    method=None,
+    dtype={
+        'id_mrigo' : sa.String,
+        'mrigo' : sa.String,
+    })
+access_to_db.engine.execute('ALTER TABLE blinov.mrigo ADD PRIMARY KEY(id_mrigo)')
 
-# okpdtr_id_name = pd.read_csv(os.path.join('tables', 'csv', 'id_okpdtr_okpdtr.csv'))
-# okpdtr_id_name.to_sql(
-#     'okpdtr',
-#     con=access_to_db.engine,
-#     schema='blinov',
-#     if_exists='replace',
-#     index=False,
-#     chunksize=None,
-#     method=None,
-#     dtype={
-#         'id' : sa.String,
-#         'name' : sa.String,
-#     })
-# access_to_db.engine.execute('ALTER TABLE blinov.okpdtr ADD PRIMARY KEY(id)')
+okpdtr_id_name = pd.read_csv(os.path.join('tables', 'csv', 'id_okpdtr_okpdtr.csv'))
+okpdtr_id_name.to_sql(
+    'okpdtr',
+    con=access_to_db.engine,
+    schema='blinov',
+    if_exists='replace',
+    index=False,
+    chunksize=None,
+    method=None,
+    dtype={
+        'id' : sa.String,
+        'name' : sa.String,
+    })
+access_to_db.engine.execute('ALTER TABLE blinov.okpdtr ADD PRIMARY KEY(id)')
 
-# companies = pd.read_csv(os.path.join('tables', 'csv', 'companies.csv'))
-# companies = companies.astype({
-#     'inn' : 'str',
-#     'ogrn' : 'str',
-#     'kpp' : 'str',
-#     })
-# for index, row in companies.iterrows():
-#     companies.at[index, 'inn'] = re.split(r'[.]', companies.at[index, 'inn'])[0]
-#     companies.at[index, 'ogrn'] = re.split(r'[.]', companies.at[index, 'ogrn'])[0]
-#     companies.at[index, 'kpp'] = re.split(r'[.]', companies.at[index, 'kpp'])[0]
-# companies = companies.replace({'nan' : np.nan})
-# companies = companies.replace({np.nan : None})
-# companies.to_sql(
-#     'companies_tv',
-#     con=access_to_db.engine,
-#     schema='blinov',
-#     if_exists='replace',
-#     index=False,
-#     chunksize=None,
-#     method=None,
-#     dtype={
-#         'ogrn' : sa.String,
-#         'inn' : sa.String,
-#         'kpp' : sa.String,
-#         'companycode' : sa.String,
-#         'name' : sa.String,
-#         'address' : sa.String,
-#         'hr-agency' : sa.String,
-#         'url' : sa.String,
-#         'site' : sa.String,
-#         'phone' : sa.String,
-#         'fax' : sa.String,
-#         'email' : sa.String,
-#     })
-# access_to_db.engine.execute('ALTER TABLE blinov.companies_tv ADD PRIMARY KEY(ogrn)')
+companies = pd.read_csv(os.path.join('tables', 'csv', 'companies.csv'))
+companies = companies.astype({
+    'inn' : 'str',
+    'ogrn' : 'str',
+    'kpp' : 'str',
+    })
+for index, row in companies.iterrows():
+    companies.at[index, 'inn'] = re.split(r'[.]', companies.at[index, 'inn'])[0]
+    companies.at[index, 'ogrn'] = re.split(r'[.]', companies.at[index, 'ogrn'])[0]
+    companies.at[index, 'kpp'] = re.split(r'[.]', companies.at[index, 'kpp'])[0]
+companies = companies.replace({'nan' : np.nan})
+companies = companies.replace({np.nan : None})
+companies.to_sql(
+    'companies_tv',
+    con=access_to_db.engine,
+    schema='blinov',
+    if_exists='replace',
+    index=False,
+    chunksize=None,
+    method=None,
+    dtype={
+        'ogrn' : sa.String,
+        'inn' : sa.String,
+        'kpp' : sa.String,
+        'companycode' : sa.String,
+        'name' : sa.String,
+        'address' : sa.String,
+        'hr-agency' : sa.String,
+        'url' : sa.String,
+        'site' : sa.String,
+        'phone' : sa.String,
+        'fax' : sa.String,
+        'email' : sa.String,
+    })
+access_to_db.engine.execute('ALTER TABLE blinov.companies_tv ADD PRIMARY KEY(ogrn)')
 
 vacancies_r = pd.read_csv(os.path.join('tables', 'csv', 'vacancies.csv'))
 vacancies_r = vacancies_r.astype({

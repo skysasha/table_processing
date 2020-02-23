@@ -27,8 +27,6 @@ def get_percent_of_null_in_columns(df):
     print(round((df.isnull().sum() * 100 / len(df)), 2).sort_values(ascending=False))
 
 
-# start_time = time.time()
-
 df_raw = pd.DataFrame()
 offset = 0
 while True:
@@ -52,17 +50,9 @@ if not df_raw.empty:
     })
   
   for index, row in df_raw.iterrows():
-    # df_raw.at[index, 'vacancy.region.region_code'] = re.split(r'[.]', df_raw.at[index, 'vacancy.region.region_code'])[0]
-    # df_raw.at[index, 'vacancy.company.inn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.inn'])[0]
-    # df_raw.at[index, 'vacancy.company.ogrn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.ogrn'])[0]
-    # df_raw.at[index, 'vacancy.company.kpp'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.kpp'])[0]
     df_raw.at[index, 'vacancy.addresses.address'] = re.sub("'location': |{|\[|lng': |'lat': |}|\]|\'", '', df_raw.at[index, 'vacancy.addresses.address'])
     df_raw.at[index, 'vacancy.duty'] = remove_tags(df_raw.at[index, 'vacancy.duty'])
     df_raw.at[index, 'vacancy.requirement.qualification'] = remove_tags(df_raw.at[index, 'vacancy.requirement.qualification'])
   df_raw = df_raw.replace({False : np.nan})
   df_raw = df_raw.replace({np.nan : None})
   df_raw.to_csv(os.path.join('tables', 'csv', 'raw_dataframe.csv'), index=None, header=True)
-  # df_raw.to_excel('tables/excel/raw_dataframe.xlsx', index=None, header=True, engine='xlsxwriter')
-
-# end_time = time.time()
-# print(f"Time: {end_time - start_time}sec")

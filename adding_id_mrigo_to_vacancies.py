@@ -28,9 +28,6 @@ for adress in adresses_raw:
   s = s.strip()
   adresses.append(s)
 
-# with open('files/adresses.txt', 'w+') as f:
-#   f.write('\n'.join(adresses))
-
 vf_btr_lines_id_mrigo = pd.read_csv(os.path.join('tables', 'csv', 'id_mrigo_mrigo.csv'))
 id_mrigo = vf_btr_lines_id_mrigo['id_mrigo'].tolist()
 mrigo = vf_btr_lines_id_mrigo['mrigo'].tolist()
@@ -54,7 +51,6 @@ mrigo.append(None)
 
 vacancies.insert(6, 'id_mrigo', [id_mrigo[indexes[i]] for i in range(len(adresses))], True)
 vacancies.to_csv(os.path.join('tables', 'csv', 'vacancies_mrigo.csv'), index=None, header=True)
-# vacancies.to_excel('tables/excel/vacancies_with_id_mrigo.xlsx', index=None, header=True, engine='xlsxwriter')
 
 vacancies_adress_mrigo_id_mrigo = vacancies[['address', 'id_mrigo']]
 vacancies_adress_mrigo_id_mrigo.insert(2, 'mrigo', [mrigo[indexes[i]] for i in range(len(adresses))], True)

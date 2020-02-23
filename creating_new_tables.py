@@ -9,10 +9,6 @@ df = pd.read_csv(os.path.join('tables', 'csv', 'raw_dataframe.csv'))
 df = df[pd.notnull(df['vacancy.company.ogrn'])]
 
 if not df.empty:
-  # for index, row in df.iterrows():
-  #   df.at[index, 'vacancy.addresses.address'] = re.sub("'location': |{|\[|lng': |'lat': |}|\]|\'", '', df.at[index, 'vacancy.addresses.address'])
-  # 'vacancy.company.code_industry_branch' и 'vacancy.category.industry' не рассматриваем, так как в записях практически нет информации;
-  # в случае 'vacancy.company.code_industry_branch' - нет ни одной записи с не NULL-значением
   companies = df[
     [ 'vacancy.company.companycode', 'vacancy.company.inn', 'vacancy.company.ogrn', 'vacancy.company.kpp',
     'vacancy.company.name',
@@ -84,5 +80,4 @@ if not df.empty:
     'vacancy.modify-date' : 'modify-date',
     })
   vacancies.to_csv(os.path.join('tables', 'csv', 'vacancies.csv'), index=None, header=True)
-  # vacancies.to_excel('tables/excel/vacancies.xlsx', index=None, header=True, engine='xlsxwriter')
   
