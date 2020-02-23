@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 from bs4 import BeautifulSoup
-import cgi
+import html
 import json
 import numpy as np
+import os
 import pandas as pd
 import re
 import time
@@ -20,14 +21,13 @@ def get_data_from_api(offset):
 
 def remove_tags(text):
   no_tags = re.sub(r'(<!--.*?-->|<[^>]*>)', '', text)
-  return cgi.escape(no_tags)
+  return html.escape(no_tags)
 
-def missing(dff):
-    print (round((dff.isnull().sum() * 100/ len(dff)),2).sort_values(ascending=False))
+def get_percent_of_null_in_columns(df):
+    print(round((df.isnull().sum() * 100 / len(df)), 2).sort_values(ascending=False))
 
 
-
-start_time = time.time()
+# start_time = time.time()
 
 df_raw = pd.DataFrame()
 offset = 0
@@ -36,7 +36,7 @@ while True:
   if status != 200:
     break
   new_data = data['results']['vacancies']
-  df_tmp = pd.json_normalize(new_data)
+  df_tmp = pd.io.json.json_normalize(new_data)
   df_raw = pd.concat([df_raw, df_tmp], sort=False, ignore_index=True)
   offset += 1
   
@@ -50,16 +50,18 @@ if not df_raw.empty:
     'vacancy.duty' : 'str',
     'vacancy.requirement.qualification' : 'str',
     })
-  df_raw['vacancy.company.inn'] = pd.to_numeric(df_raw['vacancy.company.inn'], errors='coerce')
   
   for index, row in df_raw.iterrows():
+    df_raw.at[index, 'vacancy.region.region_code'] = re.split(r'[.]', df_raw.at[index, 'vacancy.region.region_code'])[0]
+    df_raw.at[index, 'vacancy.company.inn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.inn'])[0]
+    df_raw.at[index, 'vacancy.company.ogrn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.ogrn'])[0]
+    df_raw.at[index, 'vacancy.company.kpp'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.kpp'])[0]
     df_raw.at[index, 'vacancy.addresses.address'] = re.sub("'location': |{|\[|lng': |'lat': |}|\]|\'", '', df_raw.at[index, 'vacancy.addresses.address'])
     df_raw.at[index, 'vacancy.duty'] = remove_tags(df_raw.at[index, 'vacancy.duty'])
     df_raw.at[index, 'vacancy.requirement.qualification'] = remove_tags(df_raw.at[index, 'vacancy.requirement.qualification'])
   df_raw = df_raw.replace({False : np.nan})
   df_raw = df_raw.replace({np.nan : None})
-  # print(*list(df_raw.columns), sep='\n')
-  df_raw.to_csv('tables/csv/raw_dataframe.csv', index=None, header=True)
+  df_raw.to_csv(os.path.join('tables', 'csv', 'raw_dataframe.csv'), index=None, header=True)
   # df_raw.to_excel('tables/excel/raw_dataframe.xlsx', index=None, header=True, engine='xlsxwriter')
 
 # end_time = time.time()

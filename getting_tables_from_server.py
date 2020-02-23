@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
+import os
 import pandas as pd
 import sqlalchemy
 
@@ -17,7 +18,7 @@ mrigo_query = """
         ORDER BY 1 DESC
         """
 id_mrigo_mrigo = get_table_from_query(mrigo_query)
-id_mrigo_mrigo.to_csv('tables/csv/id_mrigo_mrigo.csv', index=None, header=True)
+id_mrigo_mrigo.to_csv(os.path.join('tables', 'csv', 'id_mrigo_mrigo.csv'), index=None, header=True)
 # id_mrigo_mrigo.to_excel('tables/excel/id_mrigo_mrigo.xlsx', index=None, header=True, engine='xlsxwriter')
 
 okptdr_query = """
@@ -26,5 +27,5 @@ okptdr_query = """
         ORDER BY 1
         """
 id_okpdtr_okpdtr = get_table_from_query(okptdr_query)
-id_okpdtr_okpdtr.to_csv('tables/csv/id_okpdtr_okpdtr.csv', index=None, header=True)
+id_okpdtr_okpdtr.to_csv(os.path.join('tables', 'csv', 'id_okpdtr_okpdtr.csv'), index=None, header=True)
 # id_okpdtr_okpdtr.to_excel('tables/excel/id_okpdtr_okpdtr.xlsx', index=None, header=True, engine='xlsxwriter')
