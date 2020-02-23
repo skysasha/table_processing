@@ -22,7 +22,7 @@ if not df.empty:
     'vacancy.company.phone', 'vacancy.company.fax', 'vacancy.company.email',
     'vacancy.company.code_industry_branch',
     ]]
-  companies = companies.drop_duplicates(subset="vacancy.company.inn", keep='first')
+  companies = companies.drop_duplicates(subset="vacancy.company.ogrn", keep='first')
   companies = companies.reset_index(drop=True)
   companies = companies.rename(columns={
     'vacancy.company.ogrn' : 'ogrn',
@@ -59,7 +59,7 @@ if not df.empty:
 
   vacancies = vacancies.rename(columns={
     'vacancy.id' : 'id',
-    'vacancy.company.companycode' : 'companycode',
+    'vacancy.company.ogrn' : 'ogrn',
     'vacancy.source' : 'source',
     'vacancy.region.region_code' : 'region_code',
     'vacancy.region.name' : 'region_name',

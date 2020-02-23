@@ -52,10 +52,10 @@ if not df_raw.empty:
     })
   
   for index, row in df_raw.iterrows():
-    df_raw.at[index, 'vacancy.region.region_code'] = re.split(r'[.]', df_raw.at[index, 'vacancy.region.region_code'])[0]
-    df_raw.at[index, 'vacancy.company.inn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.inn'])[0]
-    df_raw.at[index, 'vacancy.company.ogrn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.ogrn'])[0]
-    df_raw.at[index, 'vacancy.company.kpp'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.kpp'])[0]
+    # df_raw.at[index, 'vacancy.region.region_code'] = re.split(r'[.]', df_raw.at[index, 'vacancy.region.region_code'])[0]
+    # df_raw.at[index, 'vacancy.company.inn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.inn'])[0]
+    # df_raw.at[index, 'vacancy.company.ogrn'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.ogrn'])[0]
+    # df_raw.at[index, 'vacancy.company.kpp'] = re.split(r'[.]', df_raw.at[index, 'vacancy.company.kpp'])[0]
     df_raw.at[index, 'vacancy.addresses.address'] = re.sub("'location': |{|\[|lng': |'lat': |}|\]|\'", '', df_raw.at[index, 'vacancy.addresses.address'])
     df_raw.at[index, 'vacancy.duty'] = remove_tags(df_raw.at[index, 'vacancy.duty'])
     df_raw.at[index, 'vacancy.requirement.qualification'] = remove_tags(df_raw.at[index, 'vacancy.requirement.qualification'])

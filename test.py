@@ -7,7 +7,7 @@ import pandas as pd
 # print(raw_dataframe['vacancy.region.region_code'])
 
 companies = pd.read_csv(os.path.join('tables', 'csv', 'companies.csv'))
-vacancies = pd.read_csv(os.path.join('tables', 'csv', 'vacancies.csv'))
-print(companies.shape[0], vacancies.shape[0])
+vacancies = pd.read_csv(os.path.join('tables', 'csv', 'vacancies_mrigo_okpdtr.csv'))
+print(vacancies.columns)
 # print(vacancies.isna().sum())
 
